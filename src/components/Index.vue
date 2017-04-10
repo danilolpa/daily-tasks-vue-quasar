@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       search: '',
-      percentage: 90
+      percentage: 40
     }
   },
   components: {
@@ -50,7 +50,7 @@ export default {
     bottom: -16px;
     border: none;
     border-radius: 0;
-    height: 6px;
+    height: 4px;
     background: #314161;
       .q-progress-model{
         border-radius: 0 !important;
