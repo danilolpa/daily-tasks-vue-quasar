@@ -18,15 +18,16 @@
         <q-progress :percentage="percentage" class="progress"></q-progress>
     </div>
     <div class="layout-view">
-      <task-list></task-list>
+      <list-task></list-task>
       <add-task></add-task>
     </div>
   </q-layout>
 </template>
 
 <script>
-import TaskList from './TaskList'
+import ListTask from './ListTask'
 import AddTask from './AddTask'
+import { getTaskToStorage } from '../persistence'
 
 export default {
   data () {
@@ -35,8 +36,11 @@ export default {
       percentage: 40
     }
   },
+  mounted () {
+    this.$store.commit('SET_TASK', getTaskToStorage())
+  },
   components: {
-    TaskList,
+    ListTask,
     AddTask
   }
 }

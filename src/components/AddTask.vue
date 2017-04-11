@@ -11,23 +11,21 @@
     <q-modal ref="addTask" class="minimized modal__addTask">
       <div class="row text-center">
         <q-datetime
-          v-model="time"
+          v-model="newTask.time"
           type="time"
         ></q-datetime>
       </div>
       <div class="row--nopadding">
-        <textarea placeholder="O que deseja anotar?" class="task__detail full-width"  ></textarea>
+        <textarea placeholder="O que deseja anotar?" class="task__detail full-width" v-model="newTask.description"></textarea>
       </div>
-      <div class="row text-center">
+      <div class="row toogle">
         <label>
           Essa tarefa é urgente?
-          <q-toggle
-            v-model="checked"
-          ></q-toggle>
+            <q-toggle v-model="newTask.isUrgent"></q-toggle>
         </label>
       </div>
       <div class="buttons">
-        <button class="primary Raised" @click="$refs.addTask.close()">Add</button>
+        <button class="primary Raised" @click="addTask()">Add</button>
         <button class="red outline" @click="$refs.addTask.close()">Close Me</button>
       </div>
     </q-modal>
@@ -36,17 +34,37 @@
 
 <script>
   import moment from 'moment'
+  import { Toast, Utils } from 'quasar'
 
   export default {
     data () {
       return {
-        checked: false,
-        time: moment().format()
+        taskList: [],
+        newTask: {
+          id: '',
+          isUrgent: false,
+          isFinished: false,
+          time: moment().format(),
+          description: ''
+        }
       }
     },
     props: [],
     computed: {},
-    methods: {}
+    methods: {
+      addTask () {
+        const newTask = JSON.parse(JSON.stringify(this.newTask))
+        newTask.id = Utils.uid()
+        this.$store.commit('ADD_TASK', newTask)
+        this.resetAndClose()
+      },
+      resetAndClose () {
+        this.$refs.addTask.close()
+        this.newTask.description = ''
+        this.newTask.time = moment().format()
+        Toast.create(`Você adicionou uma tarefa`)
+      }
+    }
   }
 </script>
 
