@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { addTaskToStorage } from '../persistence'
+import { addTaskToStorage, updateTaskFromStorage, removeTaskFromStorage } from '../persistence'
 
 Vue.use(Vuex)
 
@@ -17,6 +17,31 @@ export default new Vuex.Store({
     },
     SET_TASK (state, obj) {
       state.Task.list = obj
+    },
+    UPDATE_TASK (state, index) {
+      let status = state.Task.list[index].isFinished
+      state.Task.list[index].isFinished = !status
+      updateTaskFromStorage(index, state.Task.list[index])
+    },
+    REMOVE_TASK (state, index) {
+      console.log(state.Task.list)
+      Vue.delete(state.Task.list, index)
+      removeTaskFromStorage(state.Task.list[index])
+    }
+  },
+  getters: {
+    doneTasks: state => {
+      return state.Task.list.filter(todo => todo.isFinished)
+    },
+    tasksListCount: state => {
+      return state.Task.list.length
+    },
+    doneTasksCount: (state, getters) => {
+      return getters.doneTasks.length
+    },
+    percentageTasks: (state, getters) => {
+      let percentage = 100 / getters.tasksListCount * getters.doneTasksCount
+      return percentage
     }
   }
 })

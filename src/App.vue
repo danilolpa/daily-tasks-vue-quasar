@@ -14,6 +14,6 @@ export default {}
 
 <style lang="styl">
   body{
-    background: #fcfcfc
+    background: #f5f8fa
   }
 </style>

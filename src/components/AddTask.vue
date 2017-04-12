@@ -113,6 +113,9 @@
       right: 0;
       margin: auto;
       z-index: 1;
+      i{
+        font-size: 40px;
+      }
     }
   }
 </style>

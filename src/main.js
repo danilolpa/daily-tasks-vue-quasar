@@ -10,8 +10,10 @@ import Vue from 'vue'
 import Quasar from 'quasar'
 import router from './router'
 import store from './store'
+import Touch from 'vue-touch-events'
 
-Vue.use(Quasar) // Install Quasar Framework
+Vue.use(Quasar)
+Vue.use(Touch)
 
 Quasar.start(() => {
   /* eslint-disable no-new */

@@ -11,11 +11,11 @@
     <div slot="header" class="toolbar tertiary">
         <q-toolbar-title>
           <div class="">
-            <span class="on-left">12 tarefas</span>
-            <span class="on-right">3 Resolvidas</span>
+            <span class="on-left"> {{tasksListCount}} tarefas</span>
+            <span class="on-right">{{doneTasksCount}} Resolvidas</span>
           </div>
         </q-toolbar-title>
-        <q-progress :percentage="percentage" class="progress"></q-progress>
+        <q-progress :percentage="percentageTasks" class="progress"></q-progress>
     </div>
     <div class="layout-view">
       <list-task></list-task>
@@ -27,17 +27,27 @@
 <script>
 import ListTask from './ListTask'
 import AddTask from './AddTask'
-import { getTaskToStorage } from '../persistence'
+import { getTaskFromStorage } from '../persistence'
 
 export default {
   data () {
     return {
-      search: '',
-      percentage: 40
+      search: ''
     }
   },
   mounted () {
-    this.$store.commit('SET_TASK', getTaskToStorage())
+    this.$store.commit('SET_TASK', getTaskFromStorage())
+  },
+  computed: {
+    doneTasksCount () {
+      return this.$store.getters.doneTasksCount
+    },
+    tasksListCount () {
+      return this.$store.getters.tasksListCount
+    },
+    percentageTasks () {
+      return this.$store.getters.percentageTasks
+    }
   },
   components: {
     ListTask,
