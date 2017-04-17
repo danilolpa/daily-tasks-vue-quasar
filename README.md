@@ -1,6 +1,6 @@
 # Daily Tasks
 
-Um aplicativo para adicionar tarefas do dia de uma forma rapida e direta, sempre precisar de muitas inforamções, algo do dia a dia.
+Um aplicativo para adicionar tarefas do dia de uma forma rapida e direta, algo do dia a dia.
 
 > Projeto criado para aprender e tentar passar pra alguém algo que aprendi com Quasar Framework e VueJS
 
