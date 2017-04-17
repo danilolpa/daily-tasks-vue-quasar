@@ -20,6 +20,6 @@ $ quasar dev
 - Quando a tarefa vai chegando perto do horario ela vai marcar como amarela, caso esteja atrasado para marcar como feito o marcador ficará vermelho
 
 ## Download Apk
-[Baixar]([https://drive.google.com/file/d/0B7cDf4YEZxhdemdBanJKT2poVTg/view?usp=sharing])
+[Baixar](bit.ly/2pbhUF6)
 
 Danilo Almeida ;)
