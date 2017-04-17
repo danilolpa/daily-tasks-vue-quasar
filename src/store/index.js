@@ -24,9 +24,8 @@ export default new Vuex.Store({
       updateTaskFromStorage(index, state.Task.list[index])
     },
     REMOVE_TASK (state, index) {
-      console.log(state.Task.list)
-      Vue.delete(state.Task.list, index)
       removeTaskFromStorage(state.Task.list[index])
+      Vue.delete(state.Task.list, index)
     }
   },
   getters: {

@@ -8,11 +8,19 @@
         Tarefas do Dia
       </q-toolbar-title>
     </div>
-    <div slot="header" class="toolbar tertiary">
+    <div slot="header" class="toolbar tertiary toolbar__status">
         <q-toolbar-title>
+          <div class="row">
+            <div class="auto">
+              {{tasksListCount}} tarefas
+            </div>
+            <div class="auto text-right">
+              {{doneTasksCount}} Resolvidas
+            </div>
+          </div>
           <div class="">
-            <span class="on-left"> {{tasksListCount}} tarefas</span>
-            <span class="on-right">{{doneTasksCount}} Resolvidas</span>
+            <span class="on-left"> </span>
+            <span class="on-right"></span>
           </div>
         </q-toolbar-title>
         <q-progress :percentage="percentageTasks" class="progress"></q-progress>
@@ -57,6 +65,9 @@ export default {
 </script>
 
 <style lang="styl">
+  .toolbar__status{
+   padding: 10px 10px 0;
+  }
   .progress{
     position: absolute;
     left: 0;

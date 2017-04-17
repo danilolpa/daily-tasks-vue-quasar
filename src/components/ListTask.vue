@@ -6,13 +6,20 @@
       <h5>Hoje não tem tarefas</h5>
       <p>Não há nada que precisa fazer hoje?</p>
     </div>
-    <div class="card" :class="{ 'card--finished': item.isFinished }" v-for="(item, index) in list" v-touch.preventDefault @swipeleft="removeTask(index)" @tap="taskFinish(index)" :id="index" :key="item">
+    <div class="card" :class="{ 'card--finished': item.isFinished }" v-for="(item, index) in list" v-touch.preventDefault @swipeleft="askRemove(index)" @tap="taskFinish(index)" :id="index"
+    :key="item">
       <div class="card-title text-tertiary">
-        <i class="on-left text-primary">
-          fiber_manual_record
-        </i>
-        <span class="on-left">Tarefa normal</span>
-        <span class="on-right">{{item.time}}</span>
+        <div class="row">
+          <div class="width-1of10">
+            <i class="on-left" :class="colorCircle(item.time)">
+              fiber_manual_record
+            </i>
+          </div>
+          <div class="auto">
+            <span class="on-left">{{typeTask(item.isUrgent)}}</span> <br>
+            <small class="light-paragraph">{{dateTaskFormat(item.time)}}</small>
+          </div>
+        </div>
       </div>
       <div class="card-content card-force-top-padding">
         <span class="text--task">
@@ -24,13 +31,13 @@
 </template>
 
 <script>
-  import { Toast } from 'quasar'
+  import { Toast, Dialog } from 'quasar'
+  import * as moment from 'moment'
+  import 'moment/locale/pt-br'
 
   export default {
     data () {
-      return {
-        //
-      }
+      return { }
     },
     props: [],
     computed: {
@@ -42,9 +49,42 @@
       taskFinish (index) {
         this.$store.commit('UPDATE_TASK', index)
       },
-      removeTask (index) {
+      askRemove (index) {
+        const self = this
+        Dialog.create({
+          title: 'Cuidado!',
+          message: 'Deseja excluir essa tarefa?',
+          buttons: [
+            {
+              label: 'Cancelar'
+            },
+            {
+              label: 'Confirmar',
+              handler () {
+                self.deleteTask(index)
+              }
+            }
+          ]
+        })
+      },
+      deleteTask (index) {
         Toast.create(`Você removeu uma tarefa`)
         this.$store.commit('REMOVE_TASK', index)
+      },
+      dateTaskFormat (date) {
+        return moment(date).format('LLLL')
+      },
+      typeTask (priority) {
+        return (priority === true) ? 'Tarefa Urgente' : 'Tarefa normal'
+      },
+      colorCircle (date) {
+        let classColor = 'text-primary'
+        let diff = moment.duration(moment().diff(date)).asMinutes()
+        let isNegative = Math.sign(diff) === -1 || false
+        classColor = isNegative && diff >= -60 ? 'text-secondary' : classColor
+        classColor = !isNegative ? 'text-red' : classColor
+
+        return classColor
       }
     }
   }
@@ -62,6 +102,7 @@
       background #fff
       box-shadow rgba(0, 0, 0, 0.1) 0px 0px 15px 1px
       transition: 100ms
+      position: relative
       .text{
         &--task{
           font-size 15px
@@ -70,8 +111,8 @@
         }
       }
       &.card--finished{
-        opacity: .5
-      }
+        opacity: .5;
+        }
     }
   }
 </style>
